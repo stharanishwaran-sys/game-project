@@ -1,0 +1,58 @@
+:root {
+  --bg: #e9eff3;
+  --ink: #172033;
+  --muted: #5c6b80;
+  --card: #ffffff;
+  --p1: #0f8b8d;
+  --p2: #6b4fbb;
+  --gold: #e9b44c;
+  --err: #b3261e;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: ui-rounded, "SF Pro Rounded", "Nunito", system-ui, sans-serif;
+  line-height: 1.45;
+}
+.shell { max-width: 560px; margin: 0 auto; padding: 16px; }
+.top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.top h1 { font-size: 1.25rem; margin: 0; }
+nav { display: flex; gap: 6px; }
+nav a { padding: 6px 12px; border-radius: 999px; color: var(--ink); text-decoration: none; }
+nav a.active { background: var(--ink); color: #fff; }
+nav a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+.panel { background: var(--card); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+.panel h2 { margin: 0 0 8px; font-size: 1.2rem; }
+.muted { color: var(--muted); } .small { font-size: .85rem; }
+.error { color: var(--err); font-weight: 600; }
+
+label { display: block; margin-bottom: 12px; font-weight: 600; }
+input { display: block; width: 100%; margin-top: 4px; padding: 12px; font: inherit; border: 2px solid #c9d3dc; border-radius: 10px; }
+button { font: inherit; cursor: pointer; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+.primary { width: 100%; padding: 14px; border: 0; border-radius: 10px; background: var(--ink); color: #fff; font-weight: 700; margin-top: 8px; }
+
+.scorebar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; margin-bottom: 16px; }
+.scorebar > div { padding: 12px; border-radius: 12px; color: #fff; display: flex; flex-direction: column; }
+.scorebar .p1 { background: var(--p1); } .scorebar .p2 { background: var(--p2); text-align: right; }
+.scorebar strong { font-size: 2rem; line-height: 1; }
+.scorebar span { font-size: .9rem; overflow-wrap: anywhere; }
+.scorebar .mid { background: none; color: var(--muted); font-size: .85rem; text-align: center; }
+
+.choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+.choices button { padding: 16px 4px; border: 2px solid; border-radius: 12px; background: #fff; font-weight: 700; }
+.choices .c1 { border-color: var(--p1); } .choices .c2 { border-color: var(--p2); }
+.choices .big { display: block; font-size: 2rem; }
+
+.reveal { font-size: 3rem; margin: 8px 0; text-align: center; }
+.winner { border: 3px solid var(--gold); }
+
+.rounds { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 14px; overflow: hidden; }
+.rounds th, .rounds td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #e3e9ee; }
+.rounds th { font-size: .85rem; color: var(--muted); }
+
+.game summary { cursor: pointer; list-style: none; }
+.tag { margin-left: 8px; padding: 2px 8px; border-radius: 999px; background: #e3e9ee; font-size: .8rem; }
+.tag.done { background: var(--gold); }
+@media (prefers-reduced-motion: no-preference) { button { transition: transform .1s; } button:active { transform: scale(.97); } }
