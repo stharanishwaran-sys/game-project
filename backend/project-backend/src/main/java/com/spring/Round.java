@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "rounds",
-       // A game can't have two round #3s (protects against double submits)
        uniqueConstraints = @UniqueConstraint(columnNames = {"game_id", "roundNo"}))
 public class Round {
 
@@ -15,18 +14,15 @@ public class Round {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Many rounds belong to one game; creates the game_id foreign key column.
-    // @JsonIgnore stops an infinite loop (game -> rounds -> game -> ...) in JSON.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "game_id")
     @JsonIgnore
     private Game game;
 
-    private int roundNo;       // 1..6
-    private String p1Choice;   // STONE / PAPER / SCISSORS
+    private int roundNo;     
+    private String p1Choice; 
     private String p2Choice;
     private String result;   
-    // "P1", "P2" or "TIE"
     
     @Autowired
 	public void setGame(Game game) {

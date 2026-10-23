@@ -3,9 +3,9 @@ import { addRound, createGame, getGame } from './api.js';
 import { TOTAL_ROUNDS, gameReducer, initialState, score } from './gameReducer.js';
 
 const CHOICES = [
-  { id: 'STONE', label: 'Stone', icon: '✊' },
-  { id: 'PAPER', label: 'Paper', icon: '✋' },
-  { id: 'SCISSORS', label: 'Scissors', icon: '✌️' },
+  { id: 'STONE', label: 'Stone', icon: 'Stone' },
+  { id: 'PAPER', label: 'Paper', icon: 'Paper' },
+  { id: 'SCISSORS', label: 'Scissors', icon: 'Scissor' },
 ];
 const icon = (id) => CHOICES.find((c) => c.id === id)?.icon ?? '';
 const STORAGE_KEY = 'rps.gameId';
@@ -15,7 +15,6 @@ export default function GamePage() {
   const [names, setNames] = useState({ p1: '', p2: '' });
   const [busy, setBusy] = useState(false);
 
-  // On first load: if a game id is saved, ask the server for that game and rebuild state.
   useEffect(() => {
     const id = localStorage.getItem(STORAGE_KEY);
     if (!id) return dispatch({ type: 'NO_GAME' });
@@ -46,7 +45,6 @@ export default function GamePage() {
 
   async function pick(choice) {
     if (state.phase === 'p1') return dispatch({ type: 'PICK_P1', choice });
-    // Player 2 picked: now both choices exist, so save the round.
     setBusy(true);
     try {
       const game = await addRound(state.gameId, state.rounds.length + 1, state.p1Pick, choice);

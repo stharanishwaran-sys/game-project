@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getGames } from './api.js';
 import { score } from './gameReducer.js';
 
-const ICONS = { STONE: '✊', PAPER: '✋', SCISSORS: '✌️' };
+const ICONS = { STONE: 'Stone', PAPER: 'Paper', SCISSORS: 'Scissor' };
 
 export default function HistoryPage() {
   const [games, setGames] = useState(null);

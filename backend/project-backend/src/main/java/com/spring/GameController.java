@@ -11,7 +11,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/games")
-@CrossOrigin(origins = "http://localhost:5177/") // only needed for local dev (Vite port)
+@CrossOrigin(origins = "http://localhost:5173/") // for local 
 public class GameController {
 
     private static final int TOTAL_ROUNDS = 6;
@@ -19,16 +19,13 @@ public class GameController {
 
     private final GameRepo games;
 
-    // Constructor injection: Spring passes in the repository automatically
     public GameController(GameRepo games) {
         this.games = games;
     }
 
-    // Request bodies. Records are tiny immutable classes; Jackson fills them from JSON.
     record NewGame(String player1, String player2) {}
     record NewRound(int roundNo, String p1Choice, String p2Choice) {}
 
-    // POST /api/games  {"player1":"Asha","player2":"Ben"}
     @PostMapping
     public Game create(@RequestBody NewGame req) {
         if (blank(req.player1()) || blank(req.player2())) {
@@ -40,21 +37,18 @@ public class GameController {
         return games.save(g);
     }
 
-    // GET /api/games  -> history page
     @GetMapping
     public List<Game> all() {
         return games.findAllByOrderByCreatedAtDesc();
     }
 
-    // GET /api/games/5  -> used to rebuild state after a browser refresh
     @GetMapping("/{id}")
     public Game one(@PathVariable Long id) {
         return find(id);
     }
 
-    // POST /api/games/5/rounds  {"roundNo":1,"p1Choice":"STONE","p2Choice":"PAPER"}
     @PostMapping("/{id}/rounds")
-    @Transactional // all DB changes below succeed or fail together
+    @Transactional
     public Game addRound(@PathVariable Long id, @RequestBody NewRound req) {
         Game g = find(id);
 
@@ -73,7 +67,7 @@ public class GameController {
         r.setRoundNo(req.roundNo());
         r.setP1Choice(req.p1Choice());
         r.setP2Choice(req.p2Choice());
-        r.setResult(decide(req.p1Choice(), req.p2Choice())); // server decides, not the client
+        r.setResult(decide(req.p1Choice(), req.p2Choice()));
         g.getRounds().add(r);
 
         if (g.getRounds().size() == TOTAL_ROUNDS) {
@@ -83,7 +77,6 @@ public class GameController {
         return games.save(g);
     }
 
-    // ---- helpers ----
 
     private Game find(Long id) {
         return games.findById(id).orElseThrow(
@@ -94,7 +87,6 @@ public class GameController {
         return s == null || s.isBlank();
     }
 
-    // Stone beats scissors, scissors beat paper, paper beats stone
     private String decide(String a, String b) {
         if (a.equals(b)) return "TIE";
         boolean p1Wins = (a.equals("STONE") && b.equals("SCISSORS"))

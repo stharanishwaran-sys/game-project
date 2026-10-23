@@ -1,4 +1,3 @@
-// phase: 'loading' -> 'setup' -> 'p1' -> 'p2' -> 'result' -> ('p1' again | 'finished')
 export const TOTAL_ROUNDS = 6;
 
 export const initialState = {
@@ -6,10 +5,10 @@ export const initialState = {
   gameId: null,
   p1Name: '',
   p2Name: '',
-  status: 'IN_PROGRESS', // mirrors the DB: IN_PROGRESS | FINISHED
-  rounds: [],            // saved rounds, exactly as the server returns them
-  p1Pick: null,          // held only in memory until player 2 picks
-  winner: null,          // 'P1' | 'P2' | 'TIE' | null
+  status: 'IN_PROGRESS', 
+  rounds: [],            
+  p1Pick: null,          
+  winner: null,          
   error: null,
 };
 
@@ -18,8 +17,6 @@ export function gameReducer(state, action) {
     case 'NO_GAME':
       return { ...initialState, phase: 'setup' };
 
-    // Used for a brand-new game AND for restoring after a refresh:
-    // state is rebuilt entirely from what the server stored.
     case 'LOADED': {
       const g = action.game;
       return {
@@ -66,7 +63,6 @@ export function gameReducer(state, action) {
   }
 }
 
-// Derived values: computed from rounds, never stored separately.
 export const score = (rounds) => ({
   p1: rounds.filter((r) => r.result === 'P1').length,
   p2: rounds.filter((r) => r.result === 'P2').length,

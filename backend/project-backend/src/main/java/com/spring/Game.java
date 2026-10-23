@@ -15,16 +15,15 @@ import java.util.List;
 public class Game {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // MySQL AUTO_INCREMENT
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String player1;
     private String player2;
 
-    // "P1", "P2", "TIE", or null while the game is running
+    
     private String winner;
 
-	// "IN_PROGRESS" or "FINISHED"
     private String status = "IN_PROGRESS";
 
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -87,9 +86,6 @@ public class Game {
 	}
 
 
-
-    // One game has many rounds. "mappedBy" = the Round.game field owns the foreign key.
-    // cascade ALL = saving a game also saves its rounds.
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
     @OrderBy("roundNo ASC")
     private List<Round> rounds = new ArrayList<>();

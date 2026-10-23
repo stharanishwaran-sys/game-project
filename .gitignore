@@ -1,19 +1,15 @@
-# React
-frontend/node_modules/
-frontend/dist/
-frontend/.env
-
-# Java / Spring Boot
-backend/target/
-backend/.classpath
-backend/.project
-backend/.settings/
-
-# Environment and secrets
+node_modules/
+dist/
+target/
+*.class
+.classpath
+.project
+.settings/
+.metadata/
 .env
 *.env
+*.pem
 application-local.properties
-
-# IDE
 .vscode/
 .idea/
+.DS_Store

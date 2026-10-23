@@ -1,4 +1,3 @@
-// Thin wrapper around fetch. Throws an Error with a readable message on failure.
 async function request(url, options = {}) {
   const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
